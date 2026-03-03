@@ -18,6 +18,8 @@ jobs:
         run: npm install -g pnpm
       - name: Install dependencies
         run: pnpm install
+      - name: Link Vercel Project
+        run: npx vercel link --yes -p ${{ secrets.VERCEL_PROJECT_ID }} -t ${{ secrets.VERCEL_TOKEN }}
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v25
         with:
