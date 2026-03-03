@@ -17,7 +17,7 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --ignore-scripts=false
       - name: Deploy to Vercel
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
