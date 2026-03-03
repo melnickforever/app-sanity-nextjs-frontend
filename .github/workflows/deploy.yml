@@ -19,9 +19,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v25.1.0
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          scope: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: '--prod'
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: pnpm exec vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes
+
