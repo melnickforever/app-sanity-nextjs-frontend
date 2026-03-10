@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { fetchPageData, fetchPageSEO } from "@/lib/Model/SanityPageModel";
+import { fetchPageData, fetchPageSEO } from "@/lib/Model/Sanity/Page";
 import {PortableText} from "@portabletext/react";
 
 const pageId = "contact";
@@ -9,7 +9,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: seo?.seoTitle ?? `${pageId.charAt(0).toUpperCase() + pageId.slice(1)} — Dmytro Melnyk`,
-    description: seo?.seoDescription ?? "Welcome to my portfolio.",
+    description: seo?.seoDescription ?? `Welcome to ${pageId.charAt(0).toUpperCase() + pageId.slice(1)}.`,
   };
 }
 
