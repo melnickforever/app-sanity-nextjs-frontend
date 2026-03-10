@@ -1,10 +1,17 @@
 import type { Metadata } from "next";
+import { fetchPageData, fetchPageSEO } from "@/lib/Model/SanityPageModel";
+import {PortableText} from "@portabletext/react";
 
-export const metadata: Metadata = {
-  title: "About — Dmytro Melnyk",
-  description:
-    "Learn more about Dmytro Melnyk — Software Engineer & Team Lead with 8+ years of experience.",
-};
+const pageId = "about";
+export async function generateMetadata(): Promise<Metadata> {
+  const seo =  await fetchPageSEO(pageId);
+
+  return {
+    title: seo?.seoTitle ?? `${pageId.charAt(0).toUpperCase() + pageId.slice(1)} — Dmytro Melnyk`,
+    description: seo?.seoDescription ?? "Welcome to my portfolio.",
+  };
+}
+
 
 const skills = [
   { category: "Languages", items: ["TypeScript", "JavaScript", "Python", "Go", "SQL"] },
@@ -52,7 +59,8 @@ const education = [
   },
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const page = await fetchPageData(pageId)
   return (
     <>
       {/* Hero */}
@@ -62,7 +70,7 @@ export default function AboutPage() {
             About
           </p>
           <h1 className="text-4xl md:text-5xl font-light text-foreground">
-            Dmytro Melnyk
+                {page?.title}
           </h1>
         </div>
       </section>
@@ -96,22 +104,7 @@ export default function AboutPage() {
                 Hello! I&apos;m Dmytro.
               </h2>
               <p className="text-muted leading-relaxed">
-                I&apos;m a software engineer and team lead with over 8 years of
-                experience in the tech industry. I specialize in building
-                high-performance web applications and leading distributed
-                engineering teams.
-              </p>
-              <p className="text-muted leading-relaxed">
-                Throughout my career, I&apos;ve worked on everything from
-                early-stage startup MVPs to enterprise-scale platforms serving
-                millions of users. I believe that great software is built by
-                empowered teams with clear direction and strong engineering
-                culture.
-              </p>
-              <p className="text-muted leading-relaxed">
-                When I&apos;m not coding or mentoring, you&apos;ll find me
-                exploring new technologies, contributing to open-source projects,
-                or hiking in the mountains.
+                {page?.content && <PortableText value={page.content} />}
               </p>
             </div>
           </div>
