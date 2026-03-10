@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { fetchPageData, fetchPageSEO } from "@/lib/Model/SanityPageModel";
+import {PortableText} from "@portabletext/react";
 
-export const metadata: Metadata = {
-  title: "Contact — Dmytro Melnyk",
-  description:
-    "Get in touch with Dmytro Melnyk for collaboration, consulting, or just to say hello.",
-};
+const pageId = "contact";
+export async function generateMetadata(): Promise<Metadata> {
+  const seo =  await fetchPageSEO(pageId);
+
+  return {
+    title: seo?.seoTitle ?? `${pageId.charAt(0).toUpperCase() + pageId.slice(1)} — Dmytro Melnyk`,
+    description: seo?.seoDescription ?? "Welcome to my portfolio.",
+  };
+}
 
 const contactInfo = [
   {
@@ -41,7 +47,8 @@ const contactInfo = [
   },
 ];
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const page = await fetchPageData(pageId);
   return (
     <>
       {/* Hero */}
@@ -51,11 +58,10 @@ export default function ContactPage() {
             Contact
           </p>
           <h1 className="text-4xl md:text-5xl font-light text-foreground">
-            Get in Touch
+            {page?.title}
           </h1>
           <p className="mt-4 text-muted max-w-lg">
-            Have a project in mind, need a team lead, or just want to say hello?
-            I&apos;d love to hear from you.
+            {page?.content && <PortableText value={page.content} />}
           </p>
         </div>
       </section>

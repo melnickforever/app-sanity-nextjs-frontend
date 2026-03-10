@@ -1,17 +1,21 @@
 import NavgationCards from "@/components/NavigationCards";
-import { sanityClient } from "@/sanity/client";
-import { PortableText, type PortableTextBlock } from "@portabletext/react";
+import { fetchPageData, fetchPageSEO } from "@/lib/Model/SanityPageModel";
+import { PortableText } from "@portabletext/react";
+import type { Metadata } from "next";
 
-type PageDocument = {
-	title: string | null;
-	content: PortableTextBlock[] | null;
+const pageId = "home";
+export async function generateMetadata(): Promise<Metadata> {
+	const seo =  await fetchPageSEO(pageId);
+
+	return {
+		title: seo?.seoTitle ?? `${pageId.charAt(0).toUpperCase() + pageId.slice(1)} — Dmytro Melnyk`,
+		description: seo?.seoDescription ?? `Welcome to ${pageId.charAt(0).toUpperCase() + pageId.slice(1)}.`,
+	};
 }
 
-const HOME_PAGE_QUERY = `*[_type == "page" && pageId == "home" && enabled == true]{title, content}`;
-const options = { next: { revalidate: 30 } };
 
 export default async function HomePage() {
-	const page = await sanityClient.fetch<PageDocument[]>(HOME_PAGE_QUERY, {}, options);
+	const page = await fetchPageData(pageId)
 
 	return (
 		<>
@@ -20,10 +24,10 @@ export default async function HomePage() {
 				<div className="mx-auto max-w-4xl px-6 py-28 md:py-40 flex items-center justify-between">
 					<div className="max-w-2xl">
 						<div className="mb-3 text-sm font-medium uppercase tracking-widest text-muted">
-							{page[0]?.title}
+							{page?.title}
 						</div>
 						<div className="mt-6 max-w-lg text-lg leading-relaxed text-muted">
-							{page[0]?.content && <PortableText value={page[0].content} />}
+							{page?.content && <PortableText value={page.content} />}
 						</div>
 					</div>
 					<div className="hidden md:flex items-center justify-center select-none">
