@@ -1,8 +1,12 @@
 import Link from "next/link";
-import { projects } from "@/data/projects";
+import { fetchAllPortfolios } from "@/lib/Sanity/Model/Portfolio";
+import { urlFor } from "@/lib/Sanity/ImageUrl";
+import Image from "next/image";
+import { PortableText } from "@portabletext/react";
 
 export default async function PortfolioList() {
-
+    const projects = await fetchAllPortfolios();
+    console.log(projects);
     return (
         <>
             {/* Projects Grid */}
@@ -11,12 +15,20 @@ export default async function PortfolioList() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {projects.map((project) => (
                             <Link
-                                key={project.slug}
-                                href={`/portfolio/${project.slug}`}
+                                key={project.slug?.current}
+                                href={`/portfolio/${project.slug?.current}`}
                                 className="group rounded-xl border border-card-border overflow-hidden hover:border-foreground/20 transition-all block"
                             >
                                 {/* Placeholder image */}
-                                <div className="h-44 bg-section-alt flex items-center justify-center relative">
+                                <div className="h-44 bg-section-alt flex items-center justify-center relative overflow-hidden">
+                                    {project.mainImage ? (
+                                        <Image
+                                            src={urlFor(project.mainImage).width(600).height(176).url()}
+                                            alt={project.title ?? ""}
+                                            fill
+                                            className="object-cover"
+                                        />
+                                    ) : (
                                     <svg
                                         className="w-16 h-16 text-muted/20"
                                         fill="none"
@@ -30,28 +42,23 @@ export default async function PortfolioList() {
                                             d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                                         />
                                     </svg>
-                                    <span className="absolute top-4 right-4 px-2.5 py-0.5 text-xs font-medium rounded-full border border-card-border bg-white text-muted">
-                    {project.year}
-                  </span>
+                                    )}
                                 </div>
                                 <div className="p-6">
-                  <span className="text-xs font-medium uppercase tracking-wider text-muted">
-                    {project.category}
-                  </span>
                                     <h3 className="mt-2 text-lg font-medium text-foreground">
                                         {project.title}
                                     </h3>
-                                    <p className="mt-2 text-sm text-muted leading-relaxed">
-                                        {project.description}
-                                    </p>
+                                    <div className="mt-2 text-sm text-muted leading-relaxed">
+                                        {project.description && <PortableText value={project.description} />}
+                                    </div>
                                     <div className="mt-4 flex flex-wrap gap-2">
-                                        {project.tags.map((tag) => (
+                                        {project.skills?.map((skill, index) => (
                                             <span
-                                                key={tag}
+                                                key={`${index}-${skill}`}
                                                 className="px-2.5 py-0.5 text-xs rounded-full bg-section-alt text-muted"
                                             >
-                        {tag}
-                      </span>
+                                                {skill}
+                                            </span>
                                         ))}
                                     </div>
                                 </div>

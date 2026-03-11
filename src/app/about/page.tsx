@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { fetchPageData, fetchPageSEO } from "@/lib/Model/Sanity/Page";
+import { fetchPageData, fetchPageSEO } from "@/lib/Sanity/Model/Page";
 import {PortableText} from "@portabletext/react";
 
 const pageId = "about";

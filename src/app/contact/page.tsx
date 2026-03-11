@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { fetchPageData, fetchPageSEO } from "@/lib/Model/Sanity/Page";
+import { fetchPageData, fetchPageSEO } from "@/lib/Sanity/Model/Page";
 import {PortableText} from "@portabletext/react";
 
 const pageId = "contact";

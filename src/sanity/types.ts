@@ -571,7 +571,7 @@ export type AllSanitySchemaTypes =
 
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
-// Source: ../../../app-sanity-nextjs-frontend/src/lib/Model/Sanity/Page.ts
+// Source: ../../../app-sanity-nextjs-frontend/src/lib/Sanity/Model/Page.ts
 // Variable: PAGE_QUERY
 // Query: *[_type == "page" && pageId == $pageId && enabled == true]{title, content}[0]
 export type PAGE_QUERY_RESULT = {
@@ -596,7 +596,7 @@ export type PAGE_QUERY_RESULT = {
   }> | null;
 } | null;
 
-// Source: ../../../app-sanity-nextjs-frontend/src/lib/Model/Sanity/Page.ts
+// Source: ../../../app-sanity-nextjs-frontend/src/lib/Sanity/Model/Page.ts
 // Variable: PAGE_SEO_QUERY
 // Query: *[_type == "page" && pageId == $pageId && enabled == true]{seoTitle, seoDescription}[0]
 export type PAGE_SEO_QUERY_RESULT = {
@@ -604,18 +604,43 @@ export type PAGE_SEO_QUERY_RESULT = {
   seoDescription: string | null;
 } | null;
 
-// Source: ../../../app-sanity-nextjs-frontend/src/lib/Model/Sanity/Portfolio.ts
+// Source: ../../../app-sanity-nextjs-frontend/src/lib/Sanity/Model/Portfolio.ts
 // Variable: PORTFOLIO_QUERY
-// Query: *[_type == "portfolio" && enabled == true] | order(sortOrder desc) {title, slug, thumbnailImage}
+// Query: *[_type == "portfolio" && enabled == true] | order(sortOrder desc)     {        title,         slug,         "skills": skills[]->title,        mainImage,        description    }
 export type PORTFOLIO_QUERY_RESULT = Array<{
   title: string | null;
   slug: Slug | null;
-  thumbnailImage: null;
+  skills: Array<string | null> | null;
+  mainImage: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
 }>;
 
-// Source: ../../../app-sanity-nextjs-frontend/src/lib/Model/Sanity/Portfolio.ts
+// Source: ../../../app-sanity-nextjs-frontend/src/lib/Sanity/Model/Portfolio.ts
 // Variable: PORTFOLIO_DETAIL_QUERY
-// Query: *[_type == "portfolio" && slug.current == $slug && enabled == true]{title, content, seoTitle, seoDescription}[0]
+// Query: *[_type == "portfolio" && slug.current == $slug && enabled == true]    {        title,         content,         seoTitle,         seoDescription        }[0]
 export type PORTFOLIO_DETAIL_QUERY_RESULT = {
   title: string | null;
   content: null;
@@ -629,7 +654,7 @@ declare module "@sanity/client" {
   interface SanityQueries {
     '*[_type == "page" && pageId == $pageId && enabled == true]{title, content}[0]': PAGE_QUERY_RESULT;
     '*[_type == "page" && pageId == $pageId && enabled == true]{seoTitle, seoDescription}[0]': PAGE_SEO_QUERY_RESULT;
-    '*[_type == "portfolio" && enabled == true] | order(sortOrder desc) {title, slug, thumbnailImage}': PORTFOLIO_QUERY_RESULT;
-    '*[_type == "portfolio" && slug.current == $slug && enabled == true]{title, content, seoTitle, seoDescription}[0]': PORTFOLIO_DETAIL_QUERY_RESULT;
+    '\n    *[_type == "portfolio" && enabled == true] | order(sortOrder desc) \n    {\n        title, \n        slug, \n        "skills": skills[]->title,\n        mainImage,\n        description\n    }': PORTFOLIO_QUERY_RESULT;
+    '\n    *[_type == "portfolio" && slug.current == $slug && enabled == true]\n    {\n        title, \n        content, \n        seoTitle, \n        seoDescription\n        }[0]': PORTFOLIO_DETAIL_QUERY_RESULT;
   }
 }

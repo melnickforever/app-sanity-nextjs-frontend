@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { fetchPageData, fetchPageSEO } from "@/lib/Model/Sanity/Page";
+import { fetchPageData, fetchPageSEO } from "@/lib/Sanity/Model/Page";
 import  PortfolioList from "@/components/PortfolioList";
 import { PortableText } from "@portabletext/react";
 
@@ -28,9 +28,9 @@ export default async function PortfolioPage() {
           <h1 className="text-4xl md:text-5xl font-light text-foreground">
             {page?.title}
           </h1>
-          <p className="mt-4 text-muted max-w-lg">
+          <div className="mt-4 text-muted max-w-lg">
             {page?.content && <PortableText value={page.content} />}
-          </p>
+          </div>
         </div>
       </section>
 
