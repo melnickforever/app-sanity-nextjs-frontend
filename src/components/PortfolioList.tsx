@@ -1,12 +1,14 @@
 import Link from "next/link";
-import { fetchAllPortfolios } from "@/lib/Sanity/Model/Portfolio";
 import { urlFor } from "@/lib/Sanity/ImageUrl";
 import Image from "next/image";
 import { PortableText } from "@portabletext/react";
+import type { PORTFOLIO_QUERY_RESULT } from "@/sanity/types";
 
-export default async function PortfolioList() {
-    const projects = await fetchAllPortfolios();
-    console.log(projects);
+type Props = {
+    projects: PORTFOLIO_QUERY_RESULT;
+};
+
+export default function PortfolioList({ projects }: Props) {
     return (
         <>
             {/* Projects Grid */}
@@ -26,6 +28,7 @@ export default async function PortfolioList() {
                                             src={urlFor(project.mainImage).width(600).height(176).url()}
                                             alt={project.title ?? ""}
                                             fill
+                                            sizes="(max-width: 768px) 100vw, 50vw"
                                             className="object-cover"
                                         />
                                     ) : (

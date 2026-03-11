@@ -605,6 +605,45 @@ export type PAGE_SEO_QUERY_RESULT = {
 } | null;
 
 // Source: ../../../app-sanity-nextjs-frontend/src/lib/Sanity/Model/Portfolio.ts
+// Variable: PORTFOLIO_PAGE_QUERY
+// Query: *[_type == "portfolio" && enabled == true] | order(sortOrder desc) [$start..$end]    {        title,        slug,        "skills": skills[]->title,        mainImage,        description    }
+export type PORTFOLIO_PAGE_QUERY_RESULT = Array<{
+  title: string | null;
+  slug: Slug | null;
+  skills: Array<string | null> | null;
+  mainImage: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+}>;
+
+// Source: ../../../app-sanity-nextjs-frontend/src/lib/Sanity/Model/Portfolio.ts
+// Variable: PORTFOLIO_COUNT_QUERY
+// Query: count(*[_type == "portfolio" && enabled == true])
+export type PORTFOLIO_COUNT_QUERY_RESULT = number;
+
+// Source: ../../../app-sanity-nextjs-frontend/src/lib/Sanity/Model/Portfolio.ts
 // Variable: PORTFOLIO_QUERY
 // Query: *[_type == "portfolio" && enabled == true] | order(sortOrder desc)     {        title,         slug,         "skills": skills[]->title,        mainImage,        description    }
 export type PORTFOLIO_QUERY_RESULT = Array<{
@@ -654,6 +693,8 @@ declare module "@sanity/client" {
   interface SanityQueries {
     '*[_type == "page" && pageId == $pageId && enabled == true]{title, content}[0]': PAGE_QUERY_RESULT;
     '*[_type == "page" && pageId == $pageId && enabled == true]{seoTitle, seoDescription}[0]': PAGE_SEO_QUERY_RESULT;
+    '\n    *[_type == "portfolio" && enabled == true] | order(sortOrder desc) [$start..$end]\n    {\n        title,\n        slug,\n        "skills": skills[]->title,\n        mainImage,\n        description\n    }': PORTFOLIO_PAGE_QUERY_RESULT;
+    '\n    count(*[_type == "portfolio" && enabled == true])\n': PORTFOLIO_COUNT_QUERY_RESULT;
     '\n    *[_type == "portfolio" && enabled == true] | order(sortOrder desc) \n    {\n        title, \n        slug, \n        "skills": skills[]->title,\n        mainImage,\n        description\n    }': PORTFOLIO_QUERY_RESULT;
     '\n    *[_type == "portfolio" && slug.current == $slug && enabled == true]\n    {\n        title, \n        content, \n        seoTitle, \n        seoDescription\n        }[0]': PORTFOLIO_DETAIL_QUERY_RESULT;
   }
