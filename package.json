@@ -4,14 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "sanity typegen generate && next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typegen": "cd $HOME/projects/learning/sanity-learn/app-sanity-studio/apps/studio && sanity schema extract --path=$HOME/projects/learning/sanity-learn/app-sanity-nextjs-frontend/sanity-schema.json && sanity typegen generate"
   },
   "dependencies": {
     "@portabletext/react": "^6.0.3",
+    "@sanity/client": "^7.17.0",
     "@sanity/image-url": "^2.0.3",
-    "client": "link:@/sanity/client",
     "next": "16.1.6",
     "next-sanity": "^12.1.0",
     "react": "19.2.3",
