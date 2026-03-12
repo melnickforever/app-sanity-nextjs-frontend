@@ -1,12 +1,29 @@
 import Link from "next/link";
 import { urlFor } from "@/lib/Sanity/ImageUrl";
-import Image from "next/image";
 import { PortableText } from "@portabletext/react";
+import { Suspense } from "react";
 import type { PORTFOLIO_QUERY_RESULT } from "@/sanity/types";
+import PortfolioImage from "@/components/PortfolioImage";
 
 type Props = {
     projects: PORTFOLIO_QUERY_RESULT;
 };
+
+function ImageSkeleton() {
+    return (
+        <div className="absolute inset-0 bg-section-alt animate-pulse flex items-center justify-center">
+            <svg
+                className="w-8 h-8 text-muted/20 animate-spin"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+            >
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+            </svg>
+        </div>
+    );
+}
 
 export default function PortfolioList({ projects }: Props) {
     return (
@@ -21,30 +38,28 @@ export default function PortfolioList({ projects }: Props) {
                                 href={`/portfolio/${project.slug?.current}`}
                                 className="group rounded-xl border border-card-border overflow-hidden hover:border-foreground/20 transition-all block"
                             >
-                                {/* Placeholder image */}
                                 <div className="h-44 bg-section-alt flex items-center justify-center relative overflow-hidden">
                                     {project.mainImage ? (
-                                        <Image
-                                            src={urlFor(project.mainImage).width(600).height(176).url()}
-                                            alt={project.title ?? ""}
-                                            fill
-                                            sizes="(max-width: 768px) 100vw, 50vw"
-                                            className="object-cover"
-                                        />
+                                        <Suspense fallback={<ImageSkeleton />}>
+                                            <PortfolioImage
+                                                src={urlFor(project.mainImage).width(600).height(176).url()}
+                                                alt={project.title ?? ""}
+                                            />
+                                        </Suspense>
                                     ) : (
-                                    <svg
-                                        className="w-16 h-16 text-muted/20"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={0.8}
-                                            d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                                        />
-                                    </svg>
+                                        <svg
+                                            className="w-16 h-16 text-muted/20"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={0.8}
+                                                d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                                            />
+                                        </svg>
                                     )}
                                 </div>
                                 <div className="p-6">
