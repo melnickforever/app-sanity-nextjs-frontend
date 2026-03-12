@@ -13,6 +13,9 @@
 # testing
 /coverage
 
+# Sanity
+src/sanity/types.generated.ts
+
 # next.js
 /.next/
 /out/
@@ -39,3 +42,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+#sanity
+/sanity-schema.json

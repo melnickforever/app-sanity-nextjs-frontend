@@ -1,5 +1,5 @@
 import NavgationCards from "@/components/NavigationCards";
-import { fetchPageData, fetchPageSEO } from "@/lib/Model/SanityPageModel";
+import { fetchPageData, fetchPageSEO } from "@/lib/Sanity/Model/Page";
 import { PortableText } from "@portabletext/react";
 import type { Metadata } from "next";
 

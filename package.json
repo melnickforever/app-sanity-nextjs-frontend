@@ -4,26 +4,29 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "sanity typegen generate && next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typegen": "cd $HOME/projects/learning/sanity-learn/app-sanity-studio/apps/studio && sanity schema extract --path=$HOME/projects/learning/sanity-learn/app-sanity-nextjs-frontend/sanity-schema.json && sanity typegen generate"
   },
   "dependencies": {
     "@portabletext/react": "^6.0.3",
+    "@sanity/client": "^7.17.0",
     "@sanity/image-url": "^2.0.3",
-    "client\n": "link:@/sanity/client\n",
     "next": "16.1.6",
     "next-sanity": "^12.1.0",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },
   "devDependencies": {
+    "@sanity/cli": "^5.14.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
+    "sanity": "^5.14.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
