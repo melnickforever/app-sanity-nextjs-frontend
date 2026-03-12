@@ -48,7 +48,6 @@ export async function fetchPortfolioBySlug(slug: string): Promise<PORTFOLIO_DETA
     {
         title, 
         description,
-        content,
         "skills": skills[]->title,
         mainImage,
         Images[], 
