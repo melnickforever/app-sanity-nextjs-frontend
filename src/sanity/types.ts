@@ -679,10 +679,43 @@ export type PORTFOLIO_QUERY_RESULT = Array<{
 
 // Source: ../../../app-sanity-nextjs-frontend/src/lib/Sanity/Model/Portfolio.ts
 // Variable: PORTFOLIO_DETAIL_QUERY
-// Query: *[_type == "portfolio" && slug.current == $slug && enabled == true]    {        title,         content,         seoTitle,         seoDescription        }[0]
+// Query: *[_type == "portfolio" && slug.current == $slug && enabled == true]    {        title,         description,        "skills": skills[]->title,        mainImage,        Images[],         seoTitle,         seoDescription        }[0]
 export type PORTFOLIO_DETAIL_QUERY_RESULT = {
   title: string | null;
-  content: null;
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  skills: Array<string | null> | null;
+  mainImage: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+  Images: Array<{
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+    _key: string;
+  }> | null;
   seoTitle: string | null;
   seoDescription: string | null;
 } | null;
@@ -696,6 +729,6 @@ declare module "@sanity/client" {
     '\n    *[_type == "portfolio" && enabled == true] | order(sortOrder desc) [$start..$end]\n    {\n        title,\n        slug,\n        "skills": skills[]->title,\n        mainImage,\n        description\n    }': PORTFOLIO_PAGE_QUERY_RESULT;
     '\n    count(*[_type == "portfolio" && enabled == true])\n': PORTFOLIO_COUNT_QUERY_RESULT;
     '\n    *[_type == "portfolio" && enabled == true] | order(sortOrder desc) \n    {\n        title, \n        slug, \n        "skills": skills[]->title,\n        mainImage,\n        description\n    }': PORTFOLIO_QUERY_RESULT;
-    '\n    *[_type == "portfolio" && slug.current == $slug && enabled == true]\n    {\n        title, \n        content, \n        seoTitle, \n        seoDescription\n        }[0]': PORTFOLIO_DETAIL_QUERY_RESULT;
+    '\n    *[_type == "portfolio" && slug.current == $slug && enabled == true]\n    {\n        title, \n        description,\n        "skills": skills[]->title,\n        mainImage,\n        Images[], \n        seoTitle, \n        seoDescription\n        }[0]': PORTFOLIO_DETAIL_QUERY_RESULT;
   }
 }

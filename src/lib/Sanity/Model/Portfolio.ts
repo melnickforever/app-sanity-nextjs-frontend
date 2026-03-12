@@ -47,7 +47,11 @@ export async function fetchPortfolioBySlug(slug: string): Promise<PORTFOLIO_DETA
     *[_type == "portfolio" && slug.current == $slug && enabled == true]
     {
         title, 
-        content, 
+        description,
+        content,
+        "skills": skills[]->title,
+        mainImage,
+        Images[], 
         seoTitle, 
         seoDescription
         }[0]`);
