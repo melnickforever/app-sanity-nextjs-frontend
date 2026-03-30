@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { fetchPortfolioBySlug } from "@/lib/Sanity/Model/Portfolio";
-import { withRequestCache } from "@/lib/Cache";
+//import { withRequestCache } from "@/lib/Cache";
+import { cache } from "react";
 import { PortableText } from "@portabletext/react";
 import ImageCarousel from "@/components/ImageCarousel";
 import { urlFor } from "@/lib/Sanity/ImageUrl";
@@ -11,7 +12,7 @@ import { urlFor } from "@/lib/Sanity/ImageUrl";
 // Dynamic route for project details
 export const dynamicParams = true;
 
-const getCachedPortfolioBySlug = withRequestCache(fetchPortfolioBySlug);
+const getCachedPortfolioBySlug = cache(fetchPortfolioBySlug);
 export async function generateMetadata({
   params,
 }: {
