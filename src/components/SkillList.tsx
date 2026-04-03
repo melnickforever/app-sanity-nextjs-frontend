@@ -19,12 +19,10 @@ export default function SkillList({skills}: Props) {
                     </p>
                     <ul className="flex flex-wrap gap-x-2 gap-y-3 text-base leading-relaxed md:text-lg">
                         {skills.map((skill, index) => (
-                            <li key={skill} className="text-foreground">
+                            <li key={skill+'-'+index} className="text-foreground">
                                 <span className="font-medium">{skill}</span>
                                 {index < skills.length - 1 && (
-                                    <span className="ml-2 text-muted" aria-hidden="true">
-                                        ,
-                                    </span>
+                                    <span className="ml-2 text-muted" aria-hidden="true">,</span>
                                 )}
                             </li>
                         ))}
