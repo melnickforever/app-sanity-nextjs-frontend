@@ -16,7 +16,7 @@ describe('PortfolioList', () => {
   ];
 
   it('renders project titles', () => {
-    // @ts-ignore
+    // @ts-expect-error on projects
     render(<PortfolioList projects={projects} />);
     expect(screen.getByText('Test Project')).toBeInTheDocument();
   });
