@@ -15,43 +15,8 @@ A modern portfolio site built with Next.js 16 and Sanity CMS. Features real-time
 
 ### Automatic (Vercel)
 
-Deployments are automatic via GitHub Actions on every push to `main` using `.github/workflows/deploy.yml`. The workflow uses the Vercel CLI and requires the following secrets:
-- `VERCEL_ORG_ID`
-- `VERCEL_PROJECT_ID`
-- `VERCEL_TOKEN`
-
+Deployments are automatic via GitHub Actions on every push to `main` using `.github/workflows/deploy.yml`. 
 No manual steps are needed for production deployment. Ensure all required environment variables are set in Vercel project settings.
-
-### Manual (Local)
-
-1. **Install dependencies:**
-   ```sh
-   pnpm install
-   ```
-2. **Build the project:**
-   ```sh
-   pnpm build
-   ```
-3. **Start the server:**
-   ```sh
-   pnpm run dev
-   ```
-4. **Regenerate Sanity types (if schema changes):**
-   ```sh
-   pnpm typegen
-   ```
-
-
-## Testing & Continuous Integration
-
-- **Run all tests:**
-  ```sh
-  pnpm test
-  ```
-- **Run tests with coverage:**
-  ```sh
-  pnpm test:coverage
-  ```
 
 ### Husky Git Hooks
 
