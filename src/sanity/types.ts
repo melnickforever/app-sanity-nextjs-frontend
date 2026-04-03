@@ -720,6 +720,13 @@ export type PORTFOLIO_DETAIL_QUERY_RESULT = {
   seoDescription: string | null;
 } | null;
 
+// Source: ../../../app-sanity-nextjs-frontend/src/lib/Sanity/Model/Skills.ts
+// Variable: SKILLS_QUERY
+// Query: *[_type == "skill"] | order(title asc) { title }
+export type SKILLS_QUERY_RESULT = Array<{
+  title: string | null;
+}>;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
@@ -730,5 +737,6 @@ declare module "@sanity/client" {
     '\n    count(*[_type == "portfolio" && enabled == true])\n': PORTFOLIO_COUNT_QUERY_RESULT;
     '\n    *[_type == "portfolio" && enabled == true] | order(sortOrder desc) \n    {\n        title, \n        slug, \n        "skills": skills[]->title,\n        mainImage,\n        description\n    }': PORTFOLIO_QUERY_RESULT;
     '\n    *[_type == "portfolio" && slug.current == $slug && enabled == true]\n    {\n        title, \n        description,\n        "skills": skills[]->title,\n        mainImage,\n        Images[], \n        seoTitle, \n        seoDescription\n        }[0]': PORTFOLIO_DETAIL_QUERY_RESULT;
+    '\n    *[_type == "skill"] | order(title asc) { title }\n': SKILLS_QUERY_RESULT;
   }
 }
