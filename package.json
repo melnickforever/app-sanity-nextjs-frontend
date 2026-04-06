@@ -7,7 +7,7 @@
     "build": "sanity typegen generate && next build",
     "start": "next start",
     "lint": "eslint",
-    "typegen": "cd $HOME/projects/learning/sanity-learn/app-sanity-studio/apps/studio && sanity schema extract --path=$HOME/projects/learning/sanity-learn/app-sanity-nextjs-frontend/sanity-schema.json && sanity typegen generate",
+    "typegen": "cd $HOME/projects/learning/sanity-learn/app-sanity-studio/apps/studio && pnpm exec sanity schema extract --path=../../../app-sanity-nextjs-frontend/sanity-schema.json && cd $HOME/projects/learning/sanity-learn/app-sanity-nextjs-frontend && sanity typegen generate",
     "test": "jest",
     "test:ci": "jest --ci",
     "test:coverage": "jest --coverage"
